@@ -1,0 +1,179 @@
+﻿@model IEnumerable<TaskManager.Models.MyTask>
+
+@{
+    ViewData["Title"] = "Tasks List";
+
+    var mesasge = ViewBag.Message;
+    var search = ViewBag.SearchText;
+    var TasksData = ((IEnumerable<TaskManager.Models.MyTask>)ViewBag.Tasks);
+
+}
+
+<br />
+<div class="container row p-0 m-0">
+    <div class="col-4">
+        <h2 class="text-info col-2">Tasks</h2>
+    </div>
+    <div class="col-4">
+    </div>
+    <div class="col-4">
+        @using (@Html.BeginForm("TasksList", "Tasks", FormMethod.Get))
+        {
+            <input id="search" class="col-8 form-control" value="@search" name="search" placeholder="Search By Title" style="display:inline-block;" />
+            <input type="submit" class="col-3 form-control btn btn-outline-secondary" style="display:inline-block;vertical-align:top;min-width:fit-content" value="search" />
+        }
+    </div>
+    <div class="col-12 border p-3" style="max-height:400px;overflow: auto">
+
+        <div class="" style="width:100%;text-align:right;padding:2px">
+            <a id="btnSubmit" asp-controller="Tasks" asp-action="Upsert" asp-route-id=0 class="btn btn-sm btn-info form-control text-white" style="width:fit-content">
+                Create New Task
+            </a>
+        </div>
+        <table class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th style="width: 40%">
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th style="width: 23%;text-align:center">
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                    <th style="width: 23%; text-align: center">
+                        @Html.DisplayNameFor(model => model.Priority)
+                    </th>
+                    <th style="width: 14%;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (TasksData.Count() > 0)
+                {
+                    foreach (var item in TasksData)
+                    {
+                        <tr>
+                            @*<td>
+                                    @Html.DisplayFor(modelItem => item.ID)
+                                </td>*@
+                            <td>
+                                @Html.ActionLink(item.Title, "Upsert", new { id = item.ID })
+                            </td>
+                            @*<td>
+                                    @Html.DisplayFor(modelItem => item.Descriotion)
+                                </td>*@
+                            <td style="text-align:center">
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+                            <td style="text-align:center">
+                                @Html.DisplayFor(modelItem => item.Priority)
+                            </td>
+                            <td style="text-align:center">
+                                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-danger btn-sm" })
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="4" style="text-align:center">No Data Found!</td></tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@if (ViewBag.Message != null)
+{
+
+    <script type="text/javascript">
+        alert(ViewBag.Message);
+    </script>
+}
+@section Scripts {
+    <script type="text/javascript">
+
+        alert(ViewBag.Message);
+        </script>
+}
+
+
+@*<h1>TasksList</h1>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Priority)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in TasksData)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Priority)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
+@*@section Scripts {
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                //$('#btnSubmit').click(function () {
+                //$('#myAlert').show('fade');
+                alert("aaaas");
+                alert(@ViewBag.Messsage);
+                if (@ViewBag.Messsage != null && ViewBag.Messsage != "") {
+                    $("#myAlert").fadeTo(5000, 500).slideUp(500, function () {
+                        $("#myAlert").slideUp(500);
+                        alert("test");
+                    });
+                }
+
+                //});
+
+                $('#linkClose').click(function () {
+                    $('#myAlert').hide('fade');
+                });
+
+            });
+        </script>
+
+    }*@
+

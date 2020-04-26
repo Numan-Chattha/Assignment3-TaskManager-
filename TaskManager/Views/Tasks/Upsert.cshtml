@@ -1,0 +1,67 @@
+﻿@model TaskManager.Models.MyTask
+@{
+    ViewData["Title"] = (Model.ID != 0 ? "Update" : "Create")+ " Task";
+}
+<br />
+<h2 class="text-info">@(Model.ID!=0 ? "Update" : "Create") Task</h2>
+<br />
+
+<div class="border container" style="padding:30px;">
+    <form method="post">
+        @if (Model.ID != 0)
+        {
+            <input type="hidden" asp-for="ID" />
+        }
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Title"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Description"></label>
+            </div>
+            <div class="col-6">
+                <textarea asp-for="Description" class="form-control" style="resize: none;"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Status"></label>
+            </div>
+            <div class="col-6">
+                <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<Status>()"></select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Priority"></label>
+            </div>
+            <div class="col-6">
+                <select asp-for="Priority" class="form-control" asp-items="Html.GetEnumSelectList<Priority>()"></select>
+                <span asp-validation-for="Priority" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-3 offset-3">
+                <button type="submit" class="btn btn-primary form-control">
+                    @(Model.ID > 0 ? "Update" : "Create")
+                </button>
+            </div>
+            <div class="col-3">
+                <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
