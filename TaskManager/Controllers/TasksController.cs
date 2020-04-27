@@ -75,7 +75,7 @@ namespace TaskManager.Controllers
                 if (ModelState.IsValid)
                 {
                     // TODO: Add insert logic here
-                    if (myTask.ID == null || myTask.ID < 1)
+                    if (myTask.ID < 1)
                     {   
                         this.taskRepository.AddNewTask(myTask);
                     }
@@ -88,8 +88,7 @@ namespace TaskManager.Controllers
                         }
                     }
 
-                    ViewBag.Tasks = this.taskRepository.GetAllTasks();
-                    return View("TasksList");
+                    return RedirectToAction("TasksList");
                 }
                 else {
                     return View("Upsert", myTask);
@@ -140,8 +139,7 @@ namespace TaskManager.Controllers
                 throw new Exception("Unable to process Delete request"+e.ToString());
             }
 
-            ViewBag.Tasks = this.taskRepository.GetAllTasks();
-            return View("TasksList");
+            return RedirectToAction("TasksList");
         }
         public IActionResult CustomErrorPage(int id)
         {
